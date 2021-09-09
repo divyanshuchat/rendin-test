@@ -22,10 +22,12 @@ const Auth = () => {
     if (formInputs.email !== "" && formInputs.password !== "") {
       const auth = await AuthController.firebaseAuth(formInputs);
       if (auth.result === "success" && !auth.showName) {
+        setLoading(false)
         dispatch({ type: "userInfo", userInfo: auth.user });
         dispatch({ type: "isLoggedIn", isLoggedIn: true });
       }
       if (auth.result === "success" && auth.showName) {
+        setLoading(false)
         setShowNameIput(true);
       }
     } else setError("Please input the required fields");
@@ -33,13 +35,16 @@ const Auth = () => {
 
   const signUp = async () => {
     setError("");
+    setLoading(true)
     if (formInputs.email !== "" && formInputs.password !== "" && formInputs.name !== "") {
       const signup: any = await AuthController.signupUser(formInputs);
 
       if (signup.result === "success") {
+        setLoading(false)
         dispatch({ type: "userInfo", userInfo: signup.user });
         dispatch({ type: "isLoggedIn", isLoggedIn: true });
       } else if (signup.result === "error") {
+        setLoading(false)
         setError(signup.error);
       }
     } else setError("Please input the required fields");
