@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", current: true },
-  { name: "Home", href: "https://rendin.ee", current: false },
+  { name: "Home", href: "/", current: false },
 ];
 
 export const Header = (props: HeaderProps) => {
