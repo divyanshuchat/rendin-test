@@ -12,11 +12,13 @@ const Auth = () => {
     name: "",
   });
   const [showNameInput, setShowNameIput] = useState<Boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<String>();
   const { dispatch } = useContext(Context);
 
   const authenticate = async () => {
     setError("");
+    setLoading(true)
     if (formInputs.email !== "" && formInputs.password !== "") {
       const auth = await AuthController.firebaseAuth(formInputs);
       if (auth.result === "success" && !auth.showName) {
@@ -101,7 +103,7 @@ const Auth = () => {
             )}
             {error && <p className="text-xs text-red-600 py-2">{error}</p>}
             <div className="mt-6">
-              <Button label="Continue" onClick={() => (showNameInput ? signUp() : authenticate())} />
+              <Button label="Continue" loading={loading} onClick={() => (showNameInput ? signUp() : authenticate())} />
             </div>
           </div>
         </div>
