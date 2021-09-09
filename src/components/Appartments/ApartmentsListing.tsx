@@ -48,6 +48,7 @@ export const AppartmentsListing = (props: {
   };
 
   return (
+    <>
     <div className="pt-4 grid grid-cols-12 gap-x-4 gap-y-6">
       {appartments &&
         appartments.length &&
@@ -61,7 +62,9 @@ export const AppartmentsListing = (props: {
             favourite={props.favourite}
           />
         ))}
-        {showApplyDialog && <ApplyDialog applyConfirm={applyConfirm} appartmentData={tempApplyData} closeModal={setShowApplyDialog}/>}
+        
     </div>
+    {showApplyDialog && <ApplyDialog applyConfirm={applyConfirm} appartmentData={tempApplyData} closeModal={setShowApplyDialog}/>}
+    </>
   );
 };

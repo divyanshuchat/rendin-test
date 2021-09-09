@@ -19,33 +19,36 @@ const Auth = () => {
 
   const authenticate = async () => {
     setError("");
-    setLoading(true)
+    setLoading(true);
     if (formInputs.email !== "" && formInputs.password !== "") {
       const auth = await AuthController.firebaseAuth(formInputs);
       if (auth.result === "success" && !auth.showName) {
-        setLoading(false)
+        setLoading(false);
         dispatch({ type: "userInfo", userInfo: auth.user });
         dispatch({ type: "isLoggedIn", isLoggedIn: true });
       }
       if (auth.result === "success" && auth.showName) {
-        setLoading(false)
+        setLoading(false);
         setShowNameIput(true);
+      } else if (auth.result === "error") {
+        setLoading(false);
+        setError(auth.error);
       }
     } else setError("Please input the required fields");
   };
 
   const signUp = async () => {
     setError("");
-    setLoading(true)
+    setLoading(true);
     if (formInputs.email !== "" && formInputs.password !== "" && formInputs.name !== "") {
       const signup: AuthUserInfoProps = await AuthController.signupUser(formInputs);
 
       if (signup.result === "success") {
-        setLoading(false)
+        setLoading(false);
         dispatch({ type: "userInfo", userInfo: signup.user });
         dispatch({ type: "isLoggedIn", isLoggedIn: true });
       } else if (signup.result === "error") {
-        setLoading(false)
+        setLoading(false);
         setError(signup.error);
       }
     } else setError("Please input the required fields");

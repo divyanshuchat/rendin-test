@@ -26,6 +26,8 @@ async function firebaseAuth(authCredentials: AuthInputProps): Promise<any> {
 
       if (error.code === "auth/invalid-email") {
         return { result: "error", error: "Email is in incorrect format, please fix." };
+      } else {
+        return { result: "error", error: error?.message };
       }
     });
 }
@@ -50,23 +52,23 @@ async function signupUser(authCredentials: AuthInputProps) {
 
 async function getUserInfo(uid: string) {
   const dbRef = ref(getDatabase());
-      return await get(child(dbRef, `users/${uid}`))
-        .then((snapshot) => {
-          if (snapshot.exists()) {
-            return { result: "success", user: snapshot.val() };
-          } else {
-            return {
-              result: "error",
-              error: "Unable to find corresponding user in database. Try again with another email",
-            };
-          }
-        })
-        .catch((error) => {
-          return {
-            result: "error",
-            error: "Unable to find corresponding user in database. Try again with another email",
-          };
-        });
+  return await get(child(dbRef, `users/${uid}`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        return { result: "success", user: snapshot.val() };
+      } else {
+        return {
+          result: "error",
+          error: "Unable to find corresponding user in database. Try again with another email",
+        };
+      }
+    })
+    .catch((error) => {
+      return {
+        result: "error",
+        error: "Unable to find corresponding user in database. Try again with another email",
+      };
+    });
 }
 
 async function signOut() {
