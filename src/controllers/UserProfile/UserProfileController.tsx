@@ -18,7 +18,6 @@ async function updateTenantPicture(userId: string, image: any) {
     },
     async () => {
     return await getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-        console.log(downloadURL)
         return await TenantProfileController.updateUserProfile(userId, { userImage: downloadURL });
       });
     }
