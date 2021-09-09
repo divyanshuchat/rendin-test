@@ -3,21 +3,33 @@ import { AppartmentsCard } from "../ApartmentCard/ApartmentCard";
 import AppartmentController from "../../controllers/Appartment/AppartmentController";
 import moment from "moment";
 import AuthController from "../../controllers/Authentication/AuthController";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Context } from "../../store/Store";
+import { ApplyDialog } from "../ApplyDialog/ApplyDialog";
 
-export const AppartmentsListing = (props: { appartments: any; apply?: any; userInfo?: any, applied?: boolean, favourite?:boolean }) => {
+export const AppartmentsListing = (props: {
+  appartments: any;
+  apply?: any;
+  userInfo?: any;
+  applied?: boolean;
+  favourite?: boolean;
+}) => {
   const { appartments, userInfo } = props;
   const { dispatch } = useContext(Context);
+  const [showApplyDialog, setShowApplyDialog] = useState(false);
+  const [tempApplyData, setTempApplyData] = useState();
 
   const apply = async (data: any) => {
-    const apartmentData = {
-      ...data,
-      applyDate: moment().format(),
-    };
-    await AppartmentController.addApplyApartment(userInfo, apartmentData);
+    setShowApplyDialog(true);
+    setTempApplyData(data);
+  };
+
+  const applyConfirm = async (data: string) => {
+    setShowApplyDialog(false);
+    await AppartmentController.addApplyApartment(userInfo, data);
     refreshUserInfo();
   };
+
 
   const addToFav = async (data: any) => {
     const apartmentData = {
@@ -39,8 +51,16 @@ export const AppartmentsListing = (props: { appartments: any; apply?: any; userI
       {appartments &&
         appartments.length &&
         appartments.map((apartment: ApartmentProps, index: number) => (
-          <AppartmentsCard key={index} apartment={apartment} apply={apply} addToFav={addToFav} applied={props.applied} favourite={props.favourite}/>
+          <AppartmentsCard
+            key={index}
+            apartment={apartment}
+            apply={apply}
+            addToFav={addToFav}
+            applied={props.applied}
+            favourite={props.favourite}
+          />
         ))}
+        {showApplyDialog && <ApplyDialog applyConfirm={applyConfirm} appartmentData={tempApplyData} closeModal={setShowApplyDialog}/>}
     </div>
   );
 };

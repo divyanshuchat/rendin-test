@@ -83,7 +83,7 @@ const Auth = () => {
             />
             {showNameInput && (
               <>
-                <p className="py-2 text-sm text-gray-700">Welcome! Enter your name to signup</p>
+                <p className="py-2 text-sm text-gray-700">Welcome! Enter your name to sign up</p>
                 <Input
                   label="Name"
                   type="text"

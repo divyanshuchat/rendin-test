@@ -4,7 +4,9 @@ export const AppartmentsCard = (props: ApartmentCardProps) => {
   const { apartment }: ApartmentCardProps = props;
 
   const getHostname = (url: string) => {
-    return new URL(url).hostname;
+    if (url) {
+      return new URL(url).hostname;
+    } else return url;
   };
 
   return (

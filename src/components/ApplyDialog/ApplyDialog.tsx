@@ -1,24 +1,26 @@
 import { Transition, Dialog } from "@headlessui/react";
+import moment from "moment";
 import { Fragment, useState } from "react";
+import Button from "../../elements/Button/Button";
+import Input from "../../elements/Input/Input";
 
 export const ApplyDialog = (props: any) => {
-  let [isOpen, setIsOpen] = useState(true);
+  let [isOpen] = useState(true);
+  const [applyReason, setApplyReason] = useState('')
 
-  function closeModal() {
-    setIsOpen(false);
+  const applyData = {
+    ...props.appartmentData,
+    reason: applyReason,
+    applyDate: moment().format()
   }
-
-  function openModal() {
-    setIsOpen(true);
-  }
-
   return (
+    <div className="bg-red-500 h-screen w-screen">
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={closeModal}>
+      <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={() => props.closeModal(false)}>
         <div className="min-h-screen px-4 text-center">
           <Transition.Child
             as={Fragment}
-            enter="ease-out duration-300"
+            enter="ease-out duration-200"
             enterFrom="opacity-0"
             enterTo="opacity-100"
             leave="ease-in duration-200"
@@ -43,28 +45,20 @@ export const ApplyDialog = (props: any) => {
           >
             <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
               <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                Payment successful
+                Why I'm a good tenant for this apartment
               </Dialog.Title>
               <div className="mt-2">
-                <p className="text-sm text-gray-500">
-                  Your payment has been successfully submitted. We’ve sent your an email with all of the details of your
-                  order.
-                </p>
+                <Input label="" onChange={(e) => setApplyReason(e.target.value)}/>
               </div>
-
               <div className="mt-4">
-                <button
-                  type="button"
-                  className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                  onClick={closeModal}
-                >
-                  Got it, thanks!
-                </button>
+                <Button label="Apply" isHalf={true} onClick={() => props.applyConfirm(applyData)} className="mt-2 mr-2" />
+                <Button label="Cancel" isHalf={true} onClick={() => props.closeModal(false)} className="mt-2" />
               </div>
             </div>
           </Transition.Child>
         </div>
       </Dialog>
     </Transition>
+    </div>
   );
 };
