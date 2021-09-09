@@ -2,7 +2,7 @@ export interface TenantProfileInfo {
   about?: string;
   location?: string;
   price?: string;
-  rooms: {
+  rooms?: {
     min?: string;
     max?: string;
   };

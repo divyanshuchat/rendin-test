@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { ApartmentProps } from "../../interfaces/ApartmentProps";
 import { AppartmentsListing } from "./ApartmentsListing";
 
 export const SuggestedApartmentsListing = (props: { userInfo: any; appartments: any }) => {
@@ -12,7 +13,7 @@ export const SuggestedApartmentsListing = (props: { userInfo: any; appartments: 
       maxRoom: userInfo?.tenantProfile?.rooms.max,
     };
 
-    const filteredAppartments = appartments.filter(
+    const filteredAppartments = appartments?.filter(
       (obj: { price: number; location: string; rooms: number }) =>
         obj.price <= filter.price &&
         obj.location.toLowerCase() === filter.location.toLowerCase() &&
@@ -20,13 +21,13 @@ export const SuggestedApartmentsListing = (props: { userInfo: any; appartments: 
         obj.rooms <= filter.maxRoom
     );
     
-    const filterAppliedAppartments = filteredAppartments.filter((el: any) => {
-      return !_.values(userInfo?.appliedAppartments).find((f: any) => {
+    const filterAppliedAppartments = filteredAppartments.filter((el: ApartmentProps) => {
+      return !_.values(userInfo?.appliedAppartments).find((f: ApartmentProps) => {
         return el.id === f.id;
       });
     });
 
     return <AppartmentsListing appartments={filterAppliedAppartments} userInfo={userInfo} />;
-  } else return <AppartmentsListing appartments={appartments.slice(0, 39)} />;
+  } else return <AppartmentsListing appartments={appartments?.slice(0, 39)} />;
   //   I suggest we add a infinte scroll to the paginated list of apartments
 };

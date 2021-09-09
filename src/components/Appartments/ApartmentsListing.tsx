@@ -6,6 +6,7 @@ import AuthController from "../../controllers/Authentication/AuthController";
 import { useContext, useState } from "react";
 import { Context } from "../../store/Store";
 import { ApplyDialog } from "../ApplyDialog/ApplyDialog";
+import { AuthUserInfoProps } from "../../interfaces/AuthUserInfoProps";
 
 export const AppartmentsListing = (props: {
   appartments: any;
@@ -17,14 +18,14 @@ export const AppartmentsListing = (props: {
   const { appartments, userInfo } = props;
   const { dispatch } = useContext(Context);
   const [showApplyDialog, setShowApplyDialog] = useState(false);
-  const [tempApplyData, setTempApplyData] = useState();
+  const [tempApplyData, setTempApplyData] = useState<ApartmentProps>();
 
-  const apply = async (data: any) => {
+  const apply = async (data: ApartmentProps) => {
     setShowApplyDialog(true);
     setTempApplyData(data);
   };
 
-  const applyConfirm = async (data: string) => {
+  const applyConfirm = async (data: ApartmentProps) => {
     setShowApplyDialog(false);
     await AppartmentController.addApplyApartment(userInfo, data);
     refreshUserInfo();
@@ -41,7 +42,7 @@ export const AppartmentsListing = (props: {
   };
 
   const refreshUserInfo = async () => {
-    const userData: any = await AuthController.getUserInfo(userInfo.userId);
+    const userData: AuthUserInfoProps = await AuthController.getUserInfo(userInfo.userId);
     dispatch({ type: "userInfo", userInfo: userData.user });
     dispatch({ type: "isLoggedIn", isLoggedIn: true });
   };

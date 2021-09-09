@@ -4,6 +4,7 @@ import Input from "../../elements/Input/Input";
 import { AuthInputProps } from "../../interfaces/AuthInputProps";
 import AuthController from "../../controllers/Authentication/AuthController";
 import { Context } from "../../store/Store";
+import { AuthUserInfoProps } from "../../interfaces/AuthUserInfoProps";
 
 const Auth = () => {
   const [formInputs, setFormInputs] = useState<AuthInputProps>({
@@ -37,7 +38,7 @@ const Auth = () => {
     setError("");
     setLoading(true)
     if (formInputs.email !== "" && formInputs.password !== "" && formInputs.name !== "") {
-      const signup: any = await AuthController.signupUser(formInputs);
+      const signup: AuthUserInfoProps = await AuthController.signupUser(formInputs);
 
       if (signup.result === "success") {
         setLoading(false)

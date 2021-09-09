@@ -33,7 +33,7 @@ async function firebaseAuth(authCredentials: AuthInputProps): Promise<any> {
 async function signupUser(authCredentials: AuthInputProps) {
   const auth = getAuth();
   return await createUserWithEmailAndPassword(auth, authCredentials?.email, authCredentials?.password)
-    .then(async (userData: any) => {
+    .then(async (userData) => {
       const db = getDatabase();
       set(ref(db, "users/" + userData.user.uid), {
         email: userData.user.email,

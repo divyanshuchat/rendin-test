@@ -1,7 +1,8 @@
 import _ from "lodash";
+import { UserInfoProps } from "../../interfaces/UserInfo";
 import { AppartmentsListing } from "./ApartmentsListing";
 
-export const AppliedAppartmentsListing = (props: any) => {
+export const AppliedAppartmentsListing = (props: { userInfo: UserInfoProps; }) => {
   const { userInfo } = props;
   if (userInfo?.appliedAppartments) {
     return <AppartmentsListing appartments={_.values(userInfo?.appliedAppartments)} applied={true}/>;

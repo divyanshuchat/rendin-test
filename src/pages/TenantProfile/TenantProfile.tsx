@@ -8,6 +8,7 @@ import { TenantProfileInfo } from "../../interfaces/TenantProfileInfo";
 import TenantProfileController from "../../controllers/TenantProfile/TenantProfileController";
 import AuthController from "../../controllers/Authentication/AuthController";
 import UserProfileController from "../../controllers/UserProfile/UserProfileController";
+import { AuthUserInfoProps } from "../../interfaces/AuthUserInfoProps";
 
 const TenantProfile = () => {
   const { state } = useContext(Context);
@@ -37,7 +38,7 @@ const TenantProfile = () => {
   };
 
   const refreshUserInfo = async () => {
-    const userData: any = await AuthController.getUserInfo(userInfo.userId);
+    const userData: AuthUserInfoProps = await AuthController.getUserInfo(userInfo.userId);
     dispatch({ type: "userInfo", userInfo: userData.user });
     dispatch({ type: "isLoggedIn", isLoggedIn: true });
   };

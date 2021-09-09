@@ -3,7 +3,7 @@
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import TenantProfileController from "../TenantProfile/TenantProfileController";
 
-async function updateTenantPicture(userId: string, image: any) {
+async function updateTenantPicture(userId: string, image: File) {
   const storage = getStorage();
   const storageRef = ref(storage, `images/users/${userId}.jpg`);
   const uploadTask = uploadBytesResumable(storageRef, image);

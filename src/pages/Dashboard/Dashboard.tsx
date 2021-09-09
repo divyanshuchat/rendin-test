@@ -37,10 +37,10 @@ const Dashboard = () => {
                 <SuggestedApartmentsListing appartments={appartments} userInfo={state.userInfo} />
               </Tab.Panel>
               <Tab.Panel>
-                <FavAppartmentsListing appartments={appartments} userInfo={state.userInfo} />
+                <FavAppartmentsListing userInfo={state.userInfo} />
               </Tab.Panel>
               <Tab.Panel>
-                <AppliedAppartmentsListing appartments={appartments} userInfo={state.userInfo} />
+                <AppliedAppartmentsListing userInfo={state.userInfo} />
               </Tab.Panel>
             </Tab.Panels>
           </Tab.Group>

@@ -1,4 +1,6 @@
 export interface ApartmentProps {
+  slice?: any;
+  filter?: any;
   id: number;
   address?: string | undefined;
   image?: string | undefined;
